@@ -19,12 +19,12 @@ namespace MistsOfTime
         {
             World = new World(20, 20);
             Here = World.GetStartingLocation();
-            ActionResult = string.Empty;
+            ActionResult = new List<string>();
         }
 
         public World World { get; set; }
         public Location Here { get; set; }
-        public string ActionResult { get; set; }
+        public List<string> ActionResult { get; set; }
         public bool IsGameOn { get; set; }
 
         public void Play()
@@ -35,14 +35,9 @@ namespace MistsOfTime
             {
                 Console.Clear();
 
-                if (ActionResult.Length > 0)
-                {
-                    Console.WriteLine(ActionResult);
-                    ActionResult = string.Empty;
-                }
-
-                Console.WriteLine(Here.Coords + " : " + Here.Description);
-
+                DisplayActionResult();
+                DisplayLocationInfo();
+                
                 var input = Console.ReadKey();
 
                 if (_moveKeys.Contains(input.Key))
@@ -53,32 +48,67 @@ namespace MistsOfTime
             }
         }
 
+        private void DisplayLocationInfo()
+        {
+            if (Here.Description.Count > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(Here.Coords + " : " + Here.Name);
+                Console.ForegroundColor = ConsoleColor.Gray;
+                foreach (string line in Here.Description)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+        }
+
+        private void DisplayActionResult()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            if (ActionResult.Count > 0)
+            {
+                foreach (string line in ActionResult)
+                {
+                    Console.WriteLine(line);
+                }
+                ActionResult.Clear();
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
         private void Move(ConsoleKey dir)
         {
             Location newPlace = Here;
             bool isValidMove = false;
-            switch(dir)
+            string result = "";
+            switch (dir)
             {
                 case ConsoleKey.N:
                 case ConsoleKey.UpArrow:
                     isValidMove = World.MoveNorth(Here, out newPlace);
+                    result = "You travel north.";
                     break;
                 case ConsoleKey.S:
                 case ConsoleKey.DownArrow:
                     isValidMove = World.MoveSouth(Here, out newPlace);
+                    result = "You travel south.";
                     break;
                 case ConsoleKey.E:
                 case ConsoleKey.RightArrow:
                     isValidMove = World.MoveEast(Here, out newPlace);
+                    result = "You travel east.";
                     break;
                 case ConsoleKey.W:
                 case ConsoleKey.LeftArrow:
                     isValidMove = World.MoveWest(Here, out newPlace);
+                    result = "You travel west.";
                     break;
             }
             Here = newPlace;
             if(!isValidMove)
-                ActionResult = LocationStrings.MovedOutOfBounds;
+                result = LocationStrings.MovedOutOfBounds;
+            ActionResult.Add(result);
+                
         }
     }
 }
