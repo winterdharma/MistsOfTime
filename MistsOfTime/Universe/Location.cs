@@ -1,13 +1,21 @@
-﻿namespace MistsOfTime.Universe
+﻿using MistsOfTime.Assets;
+
+namespace MistsOfTime.Universe
 {
     public class Location
     {
-        public Location(string coords)
+        public Location(int x, int y)
         {
-            Coords = coords;
+            Coords = "[" + x + ", " + y + "]";
+            X = x;
+            Y = y;
+            Description = LocationStrings.BlankTerrain; 
         }
 
+        public int X { get; set; }
+        public int Y { get; set; }
         public string Coords { get; set; }
+        public string Description { get; set; }
 
         public override string ToString()
         {
