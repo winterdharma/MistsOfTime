@@ -3,8 +3,6 @@ using MistsOfTime.Universe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MistsOfTime.Interface
 {
@@ -22,19 +20,39 @@ namespace MistsOfTime.Interface
         internal LocationScreen(Game game)
         {
             Game = game;
-            ActionResult = new List<string>();
+            ActionResult = new List<TextObject>();
+            ActionResult.Add(new TextObject("", ConsoleColor.Yellow, ConsoleColor.Black));
+
+            Title = new List<TextObject>();
+            Title.Add(new TextObject("*******************************[ MISTS OF TIME ]*******************************", 
+                ConsoleColor.White, ConsoleColor.Black));
+
+            LocationInfo = SetLocationInfo(Game.Here);
+
         }
 
-        public List<string> ActionResult { get; set; }
+        public List<TextObject> ActionResult { get; set; }
+        public List<TextObject> Title { get; set; }
+        public List<TextObject> LocationInfo { get; set; }
         public Game Game { get; set; }
 
         public void Display()
         {
-            DisplayTitle();
+            Display(Title);
+            Display(ActionResult);
+            ActionResult[0].Text = "";
+            Display(LocationInfo);
+        }
 
-            DisplayActionResult();
-
-            DisplayLocationInfo();
+        public void Display(List<TextObject> textElement)
+        {
+            if (textElement.Count > 0)
+            {
+                foreach (TextObject line in textElement)
+                {
+                    line.WriteLine();
+                }
+            }
         }
 
         public void HandleInput(ConsoleKeyInfo keyInfo)
@@ -43,40 +61,17 @@ namespace MistsOfTime.Interface
                 Move(keyInfo.Key);
         }
 
-        private void DisplayTitle()
+        private List<TextObject> SetLocationInfo(Location here)
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("*******************************[ MISTS OF TIME ]*******************************");
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
-
-        private void DisplayActionResult()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            if (ActionResult.Count > 0)
+            var info = new List<TextObject>();
+            var coords = Game.Here.Coords + " : " + Game.Here.Name;
+            info.Add(new TextObject(coords, ConsoleColor.White, ConsoleColor.Black));
+            foreach (string line in Game.Here.Description)
             {
-                foreach (string line in ActionResult)
-                {
-                    Console.WriteLine(line);
-                }
-                ActionResult.Clear();
+                info.Add(new TextObject(line, ConsoleColor.Gray, ConsoleColor.Black));
             }
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
 
-        private void DisplayLocationInfo()
-        {
-            if (Game.Here.Description.Count > 0)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(Game.Here.Coords + " : " + Game.Here.Name);
-                Console.ForegroundColor = ConsoleColor.Gray;
-                foreach (string line in Game.Here.Description)
-                {
-                    Console.WriteLine(line);
-                }
-            }
+            return info;
         }
 
         private void Move(ConsoleKey dir)
@@ -110,7 +105,7 @@ namespace MistsOfTime.Interface
             Game.Here = newPlace;
             if (!isValidMove)
                 result = LocationStrings.MovedOutOfBounds;
-            ActionResult.Add(result);
+            ActionResult[0].Text = result;
         }
     }
 }
