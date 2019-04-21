@@ -45,6 +45,10 @@
     <Compile Include="Assets\GameTexts.cs" />
     <Compile Include="Assets\LocationStrings.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Interface\IntroScreen.cs" />
+    <Compile Include="Interface\IScreen.cs" />
+    <Compile Include="Interface\LocationScreen.cs" />
+    <Compile Include="Interface\ScreenEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Universe\Location.cs" />
