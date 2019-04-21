@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MistsOfTime.Assets
 {
@@ -10,7 +7,9 @@ namespace MistsOfTime.Assets
     {
         internal TextObject(List<string> text, ConsoleColor fgColor, ConsoleColor bgColor)
         {
-
+            Text = text;
+            TextColor = fgColor;
+            BackgroundColor = bgColor;
         }
 
         internal List<string> Text { get; set; }
