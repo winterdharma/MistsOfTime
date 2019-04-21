@@ -11,8 +11,6 @@ namespace MistsOfTime
 {
     internal class Game
     {
-        
-
         internal Game()
         {
             World = new World(20, 20);
@@ -26,11 +24,6 @@ namespace MistsOfTime
         public Location Here { get; set; }
         internal IScreen ActiveScreen { get; set; }
         public bool IsGameOn { get; set; }
-
-        public void Begin()
-        {
-            
-        }
 
         public void Play()
         {

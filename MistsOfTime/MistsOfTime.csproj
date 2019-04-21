@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Assets\GameTexts.cs" />
     <Compile Include="Assets\LocationStrings.cs" />
+    <Compile Include="Assets\TextObject.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Interface\IntroScreen.cs" />
     <Compile Include="Interface\IScreen.cs" />
