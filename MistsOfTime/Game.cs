@@ -27,6 +27,12 @@ namespace MistsOfTime
         public List<string> ActionResult { get; set; }
         public bool IsGameOn { get; set; }
 
+        public void Begin()
+        {
+            DisplayMessage(GameTexts.IntroText);
+            Console.ReadKey();
+        }
+
         public void Play()
         {
             IsGameOn = true;
@@ -35,7 +41,10 @@ namespace MistsOfTime
             {
                 Console.Clear();
 
+                DisplayTitle();
+
                 DisplayActionResult();
+
                 DisplayLocationInfo();
                 
                 var input = Console.ReadKey();
@@ -46,6 +55,14 @@ namespace MistsOfTime
                 else if (input.Key == ConsoleKey.Escape)
                     IsGameOn = false;
             }
+        }
+
+        private void DisplayTitle()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("*******************************[ MISTS OF TIME ]*******************************");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private void DisplayLocationInfo()
@@ -74,6 +91,45 @@ namespace MistsOfTime
                 ActionResult.Clear();
             }
             Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        private void DisplayMessage(List<string> message)
+        {
+            var fgColor = ConsoleColor.Gray;
+            var bgColor = ConsoleColor.Black;
+            foreach(string line in message)
+            {
+                string printLine = line;
+                SetColors(line, out printLine, out fgColor, out bgColor);
+                Console.ForegroundColor = fgColor;
+                Console.WriteLine(printLine);
+            }
+        }
+
+        private void SetColors(string line, out string parsedLine, out ConsoleColor fgColor, out ConsoleColor bgColor)
+        {
+            parsedLine = line;
+            fgColor = ConsoleColor.Gray;
+            bgColor = ConsoleColor.Black;
+
+            var split = line.Split('^');
+            if (split.Length > 1)
+            {
+                fgColor = ParseColor(split[0]);
+                parsedLine = split[1];
+            }
+        }
+
+        private ConsoleColor ParseColor(string colorText)
+        {
+            colorText = colorText.ToLower();
+            switch(colorText)
+            {
+                case "white": return ConsoleColor.White;
+                case "yellow": return ConsoleColor.Yellow;
+                case "gray": return ConsoleColor.Gray;
+            }
+            return ConsoleColor.Gray;
         }
 
         private void Move(ConsoleKey dir)
@@ -108,7 +164,6 @@ namespace MistsOfTime
             if(!isValidMove)
                 result = LocationStrings.MovedOutOfBounds;
             ActionResult.Add(result);
-                
         }
     }
 }
