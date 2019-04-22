@@ -11,13 +11,23 @@ namespace MistsOfTime.Interface
         public IntroScreen(Game game)
         {
             Game = game;
+            ScreenText = SetScreenText();
         }
 
         public Game Game { get; set; }
+        public List<TextObject> ScreenText { get; set; }
 
         public void Display()
         {
-            DisplayMessage(GameTexts.IntroText);
+            Display(ScreenText);
+        }
+
+        public void Display(List<TextObject> textElement)
+        {
+            foreach(TextObject line in textElement)
+            {
+                line.WriteLine();
+            }
         }
 
         public void HandleInput(ConsoleKeyInfo key)
@@ -26,17 +36,18 @@ namespace MistsOfTime.Interface
         }
 
 
-        private void DisplayMessage(List<string> message)
+        private List<TextObject> SetScreenText()
         {
+            var screenText = new List<TextObject>();
             var fgColor = ConsoleColor.Gray;
             var bgColor = ConsoleColor.Black;
-            foreach (string line in message)
+            foreach (string line in GameTexts.IntroText)
             {
                 string printLine = line;
                 SetColors(line, out printLine, out fgColor, out bgColor);
-                Console.ForegroundColor = fgColor;
-                Console.WriteLine(printLine);
+                screenText.Add(new TextObject(printLine, fgColor, bgColor));
             }
+            return screenText;
         }
 
         private void SetColors(string line, out string parsedLine, out ConsoleColor fgColor, out ConsoleColor bgColor)

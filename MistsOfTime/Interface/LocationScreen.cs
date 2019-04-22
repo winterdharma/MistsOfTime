@@ -28,7 +28,6 @@ namespace MistsOfTime.Interface
                 ConsoleColor.White, ConsoleColor.Black));
 
             LocationInfo = SetLocationInfo(Game.Here);
-
         }
 
         public List<TextObject> ActionResult { get; set; }
@@ -105,6 +104,9 @@ namespace MistsOfTime.Interface
             Game.Here = newPlace;
             if (!isValidMove)
                 result = LocationStrings.MovedOutOfBounds;
+            else
+                LocationInfo = SetLocationInfo(Game.Here);
+
             ActionResult[0].Text = result;
         }
     }
