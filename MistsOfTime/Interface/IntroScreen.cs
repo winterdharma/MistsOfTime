@@ -32,7 +32,7 @@ namespace MistsOfTime.Interface
 
         public void HandleInput(ConsoleKeyInfo key)
         {
-            ChangeActiveScreen?.Invoke(this, new ScreenEventArgs(new LocationScreen(Game)));
+            ChangeActiveScreen?.Invoke(this, new ScreenEventArgs(new RegionScreen(Game)));
         }
 
 

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MistsOfTime.Interface
 {
-    internal class LocationScreen : IScreen
+    internal class RegionScreen : IScreen
     {
         private ConsoleKey[] _moveKeys = new ConsoleKey[]
         {
@@ -17,7 +17,7 @@ namespace MistsOfTime.Interface
 
         public event EventHandler<ScreenEventArgs> ChangeActiveScreen;
 
-        internal LocationScreen(Game game)
+        internal RegionScreen(Game game)
         {
             Game = game;
             ActionResult = new List<TextObject>();
@@ -27,12 +27,12 @@ namespace MistsOfTime.Interface
             Title.Add(new TextObject("*******************************[ MISTS OF TIME ]*******************************", 
                 ConsoleColor.White, ConsoleColor.Black));
 
-            LocationInfo = SetLocationInfo(Game.Here);
+            RegionInfo = SetRegionInfo(Game.Here);
         }
 
         public List<TextObject> ActionResult { get; set; }
         public List<TextObject> Title { get; set; }
-        public List<TextObject> LocationInfo { get; set; }
+        public List<TextObject> RegionInfo { get; set; }
         public Game Game { get; set; }
 
         public void Display()
@@ -40,7 +40,7 @@ namespace MistsOfTime.Interface
             Display(Title);
             Display(ActionResult);
             ActionResult[0].Text = "";
-            Display(LocationInfo);
+            Display(RegionInfo);
         }
 
         public void Display(List<TextObject> textElement)
@@ -60,7 +60,7 @@ namespace MistsOfTime.Interface
                 Move(keyInfo.Key);
         }
 
-        private List<TextObject> SetLocationInfo(Location here)
+        private List<TextObject> SetRegionInfo(Region here)
         {
             var info = new List<TextObject>();
             var coords = Game.Here.Coords + " : " + Game.Here.Name;
@@ -69,13 +69,20 @@ namespace MistsOfTime.Interface
             {
                 info.Add(new TextObject(line, ConsoleColor.Gray, ConsoleColor.Black));
             }
+            int i = 1;
+            foreach(Land land in Game.Here.Lands)
+            {
+                info.Add(new TextObject("Land " + i + " has a population of " + land.Population + ", and " + land.Trees + " trees.", 
+                    ConsoleColor.White, ConsoleColor.Black));
+                i++;
+            }
 
             return info;
         }
 
         private void Move(ConsoleKey dir)
         {
-            Location newPlace = Game.Here;
+            Region newPlace = Game.Here;
             bool isValidMove = false;
             string result = "";
             switch (dir)
@@ -105,7 +112,7 @@ namespace MistsOfTime.Interface
             if (!isValidMove)
                 result = LocationData.MovedOutOfBounds;
             else
-                LocationInfo = SetLocationInfo(Game.Here);
+                RegionInfo = SetRegionInfo(Game.Here);
 
             ActionResult[0].Text = result;
         }

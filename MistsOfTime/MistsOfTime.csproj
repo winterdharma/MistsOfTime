@@ -48,11 +48,12 @@
     <Compile Include="Game.cs" />
     <Compile Include="Interface\IntroScreen.cs" />
     <Compile Include="Interface\IScreen.cs" />
-    <Compile Include="Interface\LocationScreen.cs" />
+    <Compile Include="Interface\RegionScreen.cs" />
     <Compile Include="Interface\ScreenEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Universe\Location.cs" />
+    <Compile Include="Universe\Land.cs" />
+    <Compile Include="Universe\Region.cs" />
     <Compile Include="Universe\World.cs" />
   </ItemGroup>
   <ItemGroup>

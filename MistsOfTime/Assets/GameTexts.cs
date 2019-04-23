@@ -15,7 +15,9 @@ namespace MistsOfTime.Assets
             "******************************************************************************",
             "",
             "WHITE^For millenia, you're small clan of nomads have wandered the steppes",
-            "with all the other tribes ",
+            "WHITE^until one day the elders learned of a way to grow grain from another",
+            "WHITE^tribe. You found a stretch of unoccupied land to make you own, and",
+            "WHITE^the hymn singers added a new chapter to your people's story.",
             "",
             "GRAY^PRESS ANY KEY TO CONTINUE . . .",
         };

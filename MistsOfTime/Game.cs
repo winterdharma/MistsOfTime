@@ -11,8 +11,10 @@ namespace MistsOfTime
 {
     internal class Game
     {
+        
         internal Game()
         {
+            Random = new Random(342387);
             World = new World(10, 10);
             Here = World.GetStartingLocation();
             
@@ -20,8 +22,9 @@ namespace MistsOfTime
             ActiveScreen.ChangeActiveScreen += OnActiveScreenChanged;
         }
 
+        internal static Random Random { get; set; }
         public World World { get; set; }
-        public Location Here { get; set; }
+        public Region Here { get; set; }
         internal IScreen ActiveScreen { get; set; }
         public bool IsGameOn { get; set; }
 
