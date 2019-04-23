@@ -5,13 +5,13 @@ namespace MistsOfTime.Universe
 {
     public class Location
     {
-        public Location(int x, int y)
+        public Location(int x, int y, string name)
         {
             Coords = "[" + x + ", " + y + "]";
             X = x;
             Y = y;
-            Name = "Another Location";
-            Description = new List<string>(LocationStrings.BlankTerrain); 
+            Name = name;
+            Description = new List<string>(LocationData.BlankTerrain); 
         }
 
         public int X { get; set; }

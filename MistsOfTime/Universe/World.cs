@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MistsOfTime.Assets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -86,13 +87,15 @@ namespace MistsOfTime.Universe
         private Dictionary<string, Location> InitializeWorld()
         {
             var locs = new Dictionary<string, Location>();
-
+            var names = new List<string>(LocationData.placeNames);
+            int i = 0;
             for (int x = 0; x < _width; x++)
             {
                 for (int y = 0; y < _height; y++)
                 {
                     string key = "[" + x + ", " + y + "]";
-                    locs[key] = new Location(x, y);
+                    locs[key] = new Location(x, y, names[i]);
+                    i++;
                 }
             }
 

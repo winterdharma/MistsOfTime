@@ -13,7 +13,7 @@ namespace MistsOfTime
     {
         internal Game()
         {
-            World = new World(20, 20);
+            World = new World(10, 10);
             Here = World.GetStartingLocation();
             
             ActiveScreen = new IntroScreen(this);

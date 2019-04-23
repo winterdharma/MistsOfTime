@@ -103,7 +103,7 @@ namespace MistsOfTime.Interface
             }
             Game.Here = newPlace;
             if (!isValidMove)
-                result = LocationStrings.MovedOutOfBounds;
+                result = LocationData.MovedOutOfBounds;
             else
                 LocationInfo = SetLocationInfo(Game.Here);
 
